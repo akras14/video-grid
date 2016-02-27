@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    .container {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      width: 24%;
+      margin: 0.5%;
+      padding: 5%;
+      box-sizing: border-box;
+      float: left;
+    }
+    .container:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+    }
+    .container img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.js"></script>
+</head>
+<body>
+  <div class="app" ng-app="myapp">
+    <display></display>
+
+    <!-- Template for top level display element -->
+    <script type="text/ng-template" id="display.html">
+      <div ng-if="videos" ng-repeat="video in videos" class="container">
+        <video-container
+          preview-url="video.posterUrl"
+          mp4-url="video.mp4Url"
+        >
+        </video-container>
+      </div>
+      <div ng-if="!videos">
+        Add spinner
+      </div>
+    </script>
+    <!-- Template for each video element -->
+    <script type="text/ng-template" id="videoContainer.html">
+      <div>
+        <img src="{{previewUrl}}" />
+      </div>
+    </script>
+  </div>
+  <script type="text/javascript" src="./source.js"></script>
+</body>
+</html>
