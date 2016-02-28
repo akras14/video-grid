@@ -133,8 +133,8 @@
     <script type="text/ng-template" id="display.html">
       <div ng-if="videos" ng-repeat="video in videos">
         <video-container
-          preview-url="video.posterUrl"
-          mp4-url="video.mp4Url"
+          preview-url="video.thumb360PosterUrl"
+          mp4-url="video.thumb360Url"
           class="container"
           ng-mouseover="hoverOn(video)"
           ng-mouseleave="hoverOff(video)"
@@ -151,9 +151,9 @@
 
     <!-- Template for each video element -->
     <script type="text/ng-template" id="videoContainer.html">
-        <img ng-show="!hover" src="{{previewUrl}}"/>
+        <img ng-show="!hover" ng-src="{{previewUrl}}"/>
         <video ng-if="hover" autoplay loop class="animated fadeIn">
-          <source src="{{mp4Url}}" type="video/mp4">
+          <source ng-src="{{mp4Url}}" type="video/mp4">
         </video>
     </script>
   </div>
