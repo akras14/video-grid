@@ -2,11 +2,53 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /*!
+     * animate.css -http://daneden.me/animate
+     * Version - 3.5.1
+     * Licensed under the MIT license - http://opensource.org/licenses/MIT
+     *
+     * Copyright (c) 2016 Daniel Eden
+     */
+
+    .animated {
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+    @-webkit-keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fadeIn {
+      -webkit-animation-name: fadeIn;
+      animation-name: fadeIn;
+    }
+  </style>
   <style type="text/css">
     .container {
       display: block;
       position: relative;
       overflow: hidden;
+      min-width: 200px;
+      min-height: 125px;
       width: 24%;
       margin: 0.5%;
       padding: 5%;
@@ -19,7 +61,7 @@
         clear: both;
         visibility: hidden;
     }
-    .container img {
+    .container img, .container video {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -35,10 +77,14 @@
 
     <!-- Template for top level display element -->
     <script type="text/ng-template" id="display.html">
-      <div ng-if="videos" ng-repeat="video in videos" class="container">
+      <div ng-if="videos" ng-repeat="video in videos">
         <video-container
           preview-url="video.posterUrl"
           mp4-url="video.mp4Url"
+          class="container"
+          ng-mouseover="hoverOn(video)"
+          ng-mouseleave="hoverOff(video)"
+          hover="video.hover"
         >
         </video-container>
       </div>
@@ -46,11 +92,13 @@
         Add spinner
       </div>
     </script>
+
     <!-- Template for each video element -->
     <script type="text/ng-template" id="videoContainer.html">
-      <div>
-        <img src="{{previewUrl}}" />
-      </div>
+        <img ng-show="!hover" src="{{previewUrl}}"/>
+        <video ng-if="hover" autoplay loop class="animated fadeIn">
+          <source src="{{mp4Url}}" type="video/mp4">
+        </video>
     </script>
   </div>
   <script type="text/javascript" src="./source.js"></script>
